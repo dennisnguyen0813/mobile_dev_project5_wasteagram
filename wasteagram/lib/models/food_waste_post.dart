@@ -20,7 +20,7 @@ class FoodWastePost {
       date: postMap['date'] as String,
       imageURL: postMap['imageURL'] as String,
       latitude: postMap['latitude'] as int,
-      longitude: postMap['latitude'] as int,
+      longitude: postMap['longitude'] as int,
       quantity: postMap['quantity'] as int,
     );
   }

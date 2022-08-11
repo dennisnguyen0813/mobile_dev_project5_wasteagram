@@ -1,12 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:wasteagram/main.dart';
-
-import 'package:wasteagram/widgets/camera_fab.dart';
 import 'package:wasteagram/widgets/circular_progress_column.dart';
 import 'package:wasteagram/widgets/list_widgets.dart';
 
