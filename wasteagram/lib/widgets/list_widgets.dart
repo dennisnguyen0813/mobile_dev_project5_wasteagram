@@ -21,16 +21,16 @@ class WasteListColumn extends StatelessWidget {
           child: ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (BuildContext context, int index) {
-              final post = snapshot.data!.docs[index];
+              final wastePost = snapshot.data!.docs[index];
               final postObject = FoodWastePost(
-                date: post['date'],
-                imageURL: post['imageURL'],
-                latitude: post['latitude'],
-                longitude: post['longitude'],
-                quantity: post['quantity'],
+                date: wastePost['date'],
+                imageURL: wastePost['imageURL'],
+                latitude: wastePost['latitude'],
+                longitude: wastePost['longitude'],
+                quantity: wastePost['quantity'],
               );
               return SemanticListTile(
-                post: post,
+                snapshot: wastePost,
                 postObject: postObject,
               );
             },
@@ -43,11 +43,11 @@ class WasteListColumn extends StatelessWidget {
 
 // return List Tile wrapped in Semantic Widget for main list screen
 class SemanticListTile extends StatelessWidget {
-  final QueryDocumentSnapshot<Object?> post;
+  final QueryDocumentSnapshot<Object?> snapshot;
   final FoodWastePost postObject;
   const SemanticListTile({
     Key? key,
-    required this.post,
+    required this.snapshot,
     required this.postObject,
   }) : super(key: key);
 
@@ -61,11 +61,11 @@ class SemanticListTile extends StatelessWidget {
         // main text field is the date followed by the quantity
         // tapping the List Tile navigates to the details screen for that post
         title: Text(
-          post['date'].toString(),
+          snapshot['date'].toString(),
           style: Theme.of(context).textTheme.headline5,
         ),
         trailing: Text(
-          post['quantity'].toString(),
+          snapshot['quantity'].toString(),
           style: Theme.of(context).textTheme.headline5,
         ),
         onTap: () {

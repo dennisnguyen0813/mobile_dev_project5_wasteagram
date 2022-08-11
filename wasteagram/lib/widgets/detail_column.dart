@@ -22,19 +22,19 @@ class DetailColumn extends StatelessWidget {
         ),
         const SizedBoxColumn(),
         // image of the post
-        Image.network(postObject.imageURL.toString()),
+        Expanded(child: Image.network(postObject.imageURL.toString())),
         // quantity of the items
         Padding(
           padding: const EdgeInsets.all(35.0),
           child: Text('${postObject.quantity.toString()} items',
-              style: Theme.of(context).textTheme.headline5),
+              style: Theme.of(context).textTheme.headline4),
         ),
         // location of food waste post
         Padding(
           padding: const EdgeInsets.only(top: 25.0),
           child: Text(
               'Location: (${postObject.longitude.toString()}, ${postObject.latitude.toString()})',
-              style: Theme.of(context).textTheme.subtitle2),
+              style: Theme.of(context).textTheme.headline5),
         ),
       ],
     );

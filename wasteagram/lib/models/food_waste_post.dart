@@ -3,8 +3,8 @@
 class FoodWastePost {
   String? date;
   String? imageURL;
-  double? latitude;
-  double? longitude;
+  int? latitude;
+  int? longitude;
   int? quantity;
 
   FoodWastePost({
@@ -19,8 +19,8 @@ class FoodWastePost {
     return FoodWastePost(
       date: postMap['date'] as String,
       imageURL: postMap['imageURL'] as String,
-      latitude: postMap['latitude'] as double,
-      longitude: postMap['latitude'] as double,
+      latitude: postMap['latitude'] as int,
+      longitude: postMap['latitude'] as int,
       quantity: postMap['quantity'] as int,
     );
   }

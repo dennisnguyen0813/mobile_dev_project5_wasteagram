@@ -38,8 +38,8 @@ class QuantityTextFormField extends StatelessWidget {
       onSaved: (input) {
         postObject.quantity = int.parse(input!);
         postObject.imageURL = fireStoreUrl;
-        postObject.longitude = locationData.longitude as double;
-        postObject.latitude = locationData.latitude as double;
+        postObject.longitude = locationData.longitude?.toInt() as int;
+        postObject.latitude = locationData.latitude?.toInt() as int;
       },
     );
   }
