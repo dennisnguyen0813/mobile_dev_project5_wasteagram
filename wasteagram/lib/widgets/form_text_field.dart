@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
+import 'package:wasteagram/main.dart';
 
 import 'package:wasteagram/models/food_waste_post.dart';
 
@@ -36,6 +37,8 @@ class QuantityTextFormField extends StatelessWidget {
         }
       },
       onSaved: (input) {
+        // wastedItemsCount += int.parse(input!);
+
         postObject.quantity = int.parse(input!);
         postObject.imageURL = fireStoreUrl;
         postObject.longitude = locationData.longitude?.toInt() as int;

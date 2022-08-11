@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:wasteagram/main.dart';
 
 import 'package:wasteagram/widgets/camera_fab.dart';
 import 'package:wasteagram/widgets/circular_progress_column.dart';
@@ -18,10 +19,13 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   final format = DateFormat('EEEE, MMMM, d');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Wasteagram')),
+      appBar: AppBar(
+        title: Text('Wasteagram - $wastedItemsCount'),
+      ),
       floatingActionButton: const CameraFab(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: StreamBuilder(

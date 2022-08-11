@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wasteagram/screens/list_screen.dart';
 import '../models/food_waste_post.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -84,7 +85,12 @@ class NewPostSaver extends StatelessWidget {
               },
             );
             // return to the main list screen after data uploaded to firebase
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ListScreen(),
+              ),
+            );
           }
         },
       ),

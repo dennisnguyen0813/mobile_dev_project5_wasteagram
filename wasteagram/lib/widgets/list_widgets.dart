@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
+import 'package:wasteagram/main.dart';
 import 'package:wasteagram/screens/detail_screen.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
 
@@ -15,6 +14,7 @@ class WasteListColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    wastedItemsCount = 0;
     return Column(
       children: [
         Expanded(
@@ -22,6 +22,8 @@ class WasteListColumn extends StatelessWidget {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (BuildContext context, int index) {
               final wastePost = snapshot.data!.docs[index];
+              // increment each time
+              wastedItemsCount += wastePost['quantity'] as int;
               final postObject = FoodWastePost(
                 date: wastePost['date'],
                 imageURL: wastePost['imageURL'],
