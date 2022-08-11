@@ -22,27 +22,20 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Wasteagram - $wastedItemsCount'),
-      ),
-      floatingActionButton: const CameraFab(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('posts')
-            .orderBy('date', descending: false)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData &&
-              snapshot.data!.docs != null &&
-              snapshot.data!.docs.isNotEmpty) {
-            return WasteListColumn(snapshot: snapshot);
-          } else {
-            return const CircularProgressColumn();
-          }
-        },
-      ),
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('posts')
+          .orderBy('date', descending: false)
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasData &&
+            snapshot.data!.docs != null &&
+            snapshot.data!.docs.isNotEmpty) {
+          return WasteListScaffold(snapshot: snapshot);
+        } else {
+          return const CircularProgressColumn();
+        }
+      },
     );
   }
 }

@@ -4,10 +4,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:wasteagram/main.dart';
 import 'package:wasteagram/screens/detail_screen.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
+import 'package:wasteagram/widgets/camera_fab.dart';
 
-class WasteListColumn extends StatelessWidget {
+class WasteListScaffold extends StatelessWidget {
   final AsyncSnapshot<QuerySnapshot> snapshot;
-  const WasteListColumn({
+  const WasteListScaffold({
     Key? key,
     required this.snapshot,
   }) : super(key: key);
@@ -15,30 +16,40 @@ class WasteListColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     wastedItemsCount = 0;
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (BuildContext context, int index) {
-              final wastePost = snapshot.data!.docs[index];
-              // increment each time
-              wastedItemsCount += wastePost['quantity'] as int;
-              final postObject = FoodWastePost(
-                date: wastePost['date'],
-                imageURL: wastePost['imageURL'],
-                latitude: wastePost['latitude'],
-                longitude: wastePost['longitude'],
-                quantity: wastePost['quantity'],
-              );
-              return SemanticListTile(
-                snapshot: wastePost,
-                postObject: postObject,
-              );
-            },
-          ),
-        )
-      ],
+    for (var doc in snapshot.data!.docs) {
+      wastedItemsCount += doc['quantity'] as int;
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Wasteagram - $wastedItemsCount'),
+      ),
+      floatingActionButton: const CameraFab(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (BuildContext context, int index) {
+                final wastePost = snapshot.data!.docs[index];
+                // // increment each time
+                // wastedItemsCount += wastePost['quantity'] as int;
+                final postObject = FoodWastePost(
+                  date: wastePost['date'],
+                  imageURL: wastePost['imageURL'],
+                  latitude: wastePost['latitude'],
+                  longitude: wastePost['longitude'],
+                  quantity: wastePost['quantity'],
+                );
+                return SemanticListTile(
+                  snapshot: wastePost,
+                  postObject: postObject,
+                );
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
