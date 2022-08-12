@@ -5,16 +5,37 @@ import 'package:wasteagram/main.dart';
 import 'package:wasteagram/screens/detail_screen.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
 import 'package:wasteagram/widgets/camera_fab.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class WasteListScaffold extends StatelessWidget {
   final AsyncSnapshot<QuerySnapshot> snapshot;
+
+  final FirebaseAnalyticsObserver observer;
+  final FirebaseAnalytics analytics;
   const WasteListScaffold({
     Key? key,
     required this.snapshot,
+    required this.analytics,
+    required this.observer,
   }) : super(key: key);
+
+  Future<void> _sendAnalyticsEvent() async {
+    await analytics.logEvent(
+      name: 'test_event',
+      parameters: <String, dynamic>{
+        'string': 'string',
+        'int': 42,
+        'long': 12334345,
+        'double': 42.0,
+        'bool': true,
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    _sendAnalyticsEvent();
+
     wastedItemsCount = 0;
     for (var doc in snapshot.data!.docs) {
       wastedItemsCount += doc['quantity'] as int;
@@ -23,7 +44,10 @@ class WasteListScaffold extends StatelessWidget {
       appBar: AppBar(
         title: Text('Wasteagram - $wastedItemsCount'),
       ),
-      floatingActionButton: const CameraFab(),
+      floatingActionButton: CameraFab(
+        observer: observer,
+        analytics: analytics,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Column(
         children: [

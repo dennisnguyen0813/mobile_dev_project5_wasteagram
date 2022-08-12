@@ -1,13 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wasteagram/screens/list_screen.dart';
-import '../models/food_waste_post.dart';
+
+// needed for firestore, location, and internationalization services
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
+// needed to import assorted widgets required below
 import 'package:wasteagram/widgets/waste_form.dart';
+import 'package:wasteagram/screens/list_screen.dart';
+import '../models/food_waste_post.dart';
 
 // column of new post screens that contains selected image
 // and input form
@@ -51,12 +56,18 @@ class NewPostSaver extends StatelessWidget {
   final FoodWastePost foodWastePost;
   final GlobalKey<FormState> formKey;
   final String? fireStoreURL;
-  const NewPostSaver({
-    Key? key,
-    required this.foodWastePost,
-    required this.formKey,
-    required this.fireStoreURL,
-  }) : super(key: key);
+
+  final FirebaseAnalyticsObserver observer;
+  final FirebaseAnalytics analytics;
+
+  const NewPostSaver(
+      {Key? key,
+      required this.foodWastePost,
+      required this.formKey,
+      required this.fireStoreURL,
+      required this.analytics,
+      required this.observer})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +99,10 @@ class NewPostSaver extends StatelessWidget {
             // Navigator.of(context).pop();
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const ListScreen(),
+                builder: (context) => ListScreen(
+                  observer: observer,
+                  analytics: analytics,
+                ),
               ),
             );
           }

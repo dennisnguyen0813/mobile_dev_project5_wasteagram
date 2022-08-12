@@ -7,14 +7,30 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wasteagram/widgets/new_post_widgets.dart';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 class NewPostScreen extends StatefulWidget {
-  const NewPostScreen({Key? key}) : super(key: key);
+  final FirebaseAnalyticsObserver observer;
+  final FirebaseAnalytics analytics;
+
+  const NewPostScreen({
+    Key? key,
+    required this.analytics,
+    required this.observer,
+  }) : super(key: key);
 
   @override
-  State<NewPostScreen> createState() => _NewPostScreenState();
+  State<NewPostScreen> createState() => _NewPostScreenState(
+        observer,
+        analytics,
+      );
 }
 
 class _NewPostScreenState extends State<NewPostScreen> {
+  final FirebaseAnalyticsObserver observer;
+  final FirebaseAnalytics analytics;
+  _NewPostScreenState(this.observer, this.analytics);
+
   File? image;
   final picker = ImagePicker();
   LocationData? locationData;
@@ -73,6 +89,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
           foodWastePost: foodWastePost,
           formKey: formKey,
           fireStoreURL: fireStoreURL,
+          analytics: analytics,
+          observer: observer,
         ),
       );
     }
